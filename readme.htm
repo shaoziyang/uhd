@@ -7,7 +7,7 @@
 </head>
 
 <body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
-<p><b><img src="uhd.gif" align="left" width="64" height="64" border="0"><span style="font-size:28pt;">UHD</span> <br>(Universal Hardware Drive)</b></p>
+<p><b><img src="uhd.gif" align="left" width="64" height="64" border="0"><span style="font-size:28pt;">UHD</span><br><font size="4">(Universal Hardware Drive)</font></b></p>
 <p>&nbsp;</p>
 <p>Universal Hardware Drive is a set of macro and function for microcontrollers, 
 such as AVR, PIC10, PIC12, PIC16, PIC18, PIC24,&nbsp;MSP430, 8x51, STM8, etc. 
@@ -17,7 +17,9 @@ other peripherals.</p>
 <p>&nbsp;</p>
 <p><a href="#License">License</a></p>
 <p><a href="#Feature">Feature</a></p>
-<p><a href="#Support Microcontroller">Support Microcontroller</a></p>
+<p><a href="#Tested Microcontroller">Tested Microcontroller</a></p>
+<p><a href="#Usage">Usage</a></p>
+<p><a href="#API">API</a></p>
 <p><a href="readme.htm#Contact">Contact</a></p>
 <p><a href="#History">History</a></p>
 <p>&nbsp;</p>
@@ -26,14 +28,225 @@ other peripherals.</p>
 <p>Do not be evil.</p>
 <p>&nbsp;</p>
 <h2><a name="Feature">Feature</a></h2>
-<p>&nbsp;</p>
-<h2><a name="Support Microcontroller">Support Microcontroller</a></h2>
 <ul>
-    <li>PIC10 serial. Test with Microchip <a href="http://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ac103011">PIC10F32x 
+    <li>Easy to use.</li>
+    <li>Use same interface/function between microcontrollers.</li>
+    <li>Small and e<span style="color: rgb(0, 0, 0); font-family: 'Microsoft YaHei'; font-size: 13px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: nowrap; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">fficient.</span></li>
+    <li>support cutdown to reduce.</li>
+</ul>
+<p>&nbsp;</p>
+<h2><a name="Tested Microcontroller">Tested Microcontroller</a></h2>
+<ul>
+    <li>PIC10F322. Test with Microchip <a href="http://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ac103011">PIC10F32x 
     Development Board</a>.</li>
+    <li>ATmega328P. Test with Arduino nano 3.</li>
 </ul>
 <p>&nbsp;</p>
 <p>More device is being added.</p>
+<p>&nbsp;</p>
+<h2><a name="Usage">Usage</a></h2>
+<p>Add files uhd.c and uhd.h to your project.</p>
+<p>If you use&nbsp;cutdown feature, you need set macro _UHD_CUTDOWN_ to 1 in 
+file uhd.h, then add file uhdcutdown.h and set cutdown macro in it.</p>
+<p>&nbsp;</p>
+<h2><a name="API">API</a></h2>
+<ul>
+    <li><a href="#API_IO">IO</a></li>
+    <li><a href="#API_TIMER">TIMER</a></li>
+    <li>PWM</li>
+    <li>WDT</li>
+    <li>OSC</li>
+    <li>EXTINT</li>
+    <li>PININT</li>
+    <li>UART</li>
+    <li>SPI</li>
+    <li>I2C</li>
+    <li>Other</li>
+</ul>
+<p>&nbsp;</p>
+<table cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;&nbsp;&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#CCCCCC">
+            <p><b><a name="API_IO">IO</a></b></p>
+        </td>
+        <td bgcolor="#CCCCCC">
+            <p>&nbsp;</p>
+        </td>
+        <td bgcolor="#CCCCCC">
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#F0F0F0">
+            <p><b>Define IO</b></p>
+        </td>
+        <td bgcolor="#F0F0F0">
+            <p>&nbsp;</p>
+        </td>
+        <td bgcolor="#F0F0F0">
+            <p>#define NAME&nbsp;&nbsp;PORT, INDEX</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p><br>NAME:&nbsp;Name of a IO<br>PORT: IO's PORT of MCU<br>INDEX: 
+            IO's PORT index<br>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;&nbsp;example</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>#define LED &nbsp;&nbsp;&nbsp;&nbsp;A, 1<br>#define BUTTON &nbsp;A, 
+            3</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#CCCCCC">
+            <p><b><a name="API_TIMER">TIMER</a></b></p>
+        </td>
+        <td bgcolor="#CCCCCC">
+            <p>&nbsp;</p>
+        </td>
+        <td bgcolor="#CCCCCC">
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+        <td>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+</table>
+<p>&nbsp;</p>
+<p>Not finished, please see uhd.h for more interface, and examples for more 
+usage.</p>
 <p>&nbsp;</p>
 <h2><a name="Contact">Contact</a></h2>
 <p>Author: &nbsp;&nbsp;Shao ziyang</p>
