@@ -29,7 +29,7 @@
 #include <stdint.h>
 
 #define _UHD_VER_       1.0
-#define _UHD_BUILD_     1060
+#define _UHD_BUILD_     1080
 #define _UHD_COMPILE_   XC8
 #define _UHD_PLATFORM_  PIC10
 
@@ -103,6 +103,12 @@
 #define PWM_2       2
 #define PWM_3       3
 #define PWM_4       4
+
+#define PININT_0    0
+#define PININT_1    1
+#define PININT_2    2
+#define PININT_3    3
+
 
 
 // --------------------------------------------------------
@@ -237,17 +243,35 @@ extern void WDT_sleep(uint16_t cnt);
 // --------------------------------------------------------
 #if (_UHD_PWM_CUTDOWN_ != 1)
 
-#define PWM_FREQ_DISABLE    0
+enum PWM_FREQ_SYSDIV_MODE
+{
+    PWM_FREQ_SYSDIV_OFF = 0,
+    PWM_FREQ_SYSDIV_1   = 1,
+    PWM_FREQ_SYSDIV_4   = 2,
+    PWM_FREQ_SYSDIV_16  = 3,
+    PWM_FREQ_SYSDIV_64  = 4    
+};
+
+// use system clock set PWM frequency, and max duty is 100
+//  sysdiv: system clock prescale
+//    sysdiv = PWM_FREQ_SYSDIV_OFF, PWM off
+//    sysdiv = PWM_FREQ_SYSDIV_1, PWM frequency is sysclk / 100
+//    sysdiv = PWM_FREQ_SYSDIV_4, PWM frequency is sysclk / 400
+//    sysdiv = PWM_FREQ_SYSDIV_16, PWM frequency is sysclk / 1600
+//    sysdiv = PWM_FREQ_SYSDIV_64, PWM frequency is sysclk / 6400
+extern void PWM_freq_sysdiv(enum PWM_FREQ_SYSDIV_MODE sysdiv);
+
+// set PWM frequency, if freq == 0, PWM is disable
+//  freq: PWM frequency
+extern void PWM_freq(uint32_t freq);
+
+
 enum PWM_MODE
 {
     PWM_OFF,
     PWM_ON,
     PWM_INVERT_PHASE
 };
-
-// set PWM frequency, if freq == 0, PWM is disable
-//  freq: PWM frequency
-extern void PWM_freq(uint32_t freq);
 
 // set PWM out
 //  no: PWM number (1/2/3/4)
@@ -294,7 +318,7 @@ extern void EXTINT_init(enum EXTINT_MODE mode, void (* isr)());
 // IOC INT(PIN INT)
 enum PININT_MODE
 {
-    PININT_NULL=0,
+    PININT_OFF=0,
     PININT_POSITIVE_EDGE=1,
     PININT_NEGATIVE_EDGE=2,
     PININT_POSITIVE_NEGATIVE_EDGE=3
@@ -303,12 +327,12 @@ enum PININT_MODE
 // set PININT user isr
 //  isr: user PININT isr
 extern void PININT_init(void (* isr)());
-#define PININT_set(PIN, MODE)   {\
-                                    MACRO_ABCD(IOC, MACRO_ARG21(PIN), P, MACRO_ARG22(PIN)) = (MODE%2);\
-                                    MACRO_ABCD(IOC, MACRO_ARG21(PIN), N, MACRO_ARG22(PIN)) = (MODE>>1);\
+#define PININT_set(index, MODE) {\
+                                    MACRO_AB(IOCAP, index) = (MODE%2);\
+                                    MACRO_AB(IOCAN, index) = (MODE>>1);\
                                 }
-#define PININT_flag(PIN)        MACRO_ABCD(IOC, MACRO_ARG21(PIN), F, MACRO_ARG22(PIN))
-#define PININT_flag_clr(PIN)    MACRO_ABCD(IOC, MACRO_ARG21(PIN), F, MACRO_ARG22(PIN)) = 0
+#define PININT_flag(index)      MACRO_AB(IOCAF, index)
+#define PININT_flag_clr(index)  MACRO_AB(IOCAF, index) = 0
 #define PININT_enable()         IOCIE = 1
 #define PININT_disable()        IOCIE = 0
 

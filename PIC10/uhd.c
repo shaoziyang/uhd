@@ -189,6 +189,22 @@ void WDT_set(uint8_t WDTO)
 // --------------------------------------------------------
 #if (_UHD_PWM_CUTDOWN_ != 1)
 
+// use system clock set PWM frequency, and max duty is 100
+//  sysdiv: system clock prescale
+void PWM_freq_sysdiv(enum PWM_FREQ_SYSDIV_MODE sysdiv)
+{
+    T2CON = 0;
+    TMR2_interrupt_disable();
+
+    if(sysdiv == PWM_FREQ_SYSDIV_OFF)
+        return;
+    
+    T2CONbits.T2CKPS = sysdiv - 1;
+    // max duty is (PR2 + 1)*4 = 100
+    PR2 = 24;
+    TMR2_on();
+}
+
 // set PWM frequency, if freq == 0, PWM is disable
 //  freq: PWM frequency
 void PWM_freq(uint32_t freq)
